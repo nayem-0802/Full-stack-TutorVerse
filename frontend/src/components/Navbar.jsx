@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { FaBars, FaTimes, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import supabase from '../supabaseClient';
+import { useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [profilePicture, setProfilePicture] = useState(null);
+  const location = useLocation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -74,10 +76,10 @@ const Navbar = () => {
         </div>
 
         <ul className="hidden sm:flex space-x-6 font-semibold text-sm text-black items-center">
-          <li><a href="/" className="hover:text-[#70B44A]">Home</a></li>
-          <li><a href="/all-tutors" className="hover:text-[#70B44A]">Tutors</a></li>
-          <li><a href="/all-posts" className="hover:text-[#70B44A]">Tuitions</a></li>
-          <li><a href="/service" className="hover:text-[#70B44A]">Services</a></li>
+          <li><a href="/" className={`hover:text-[#70B44A] ${location.pathname === '/' ? `text-[#70B44A]` : ''}`}>Home</a></li>
+          <li><a href="/all-tutors" className={`hover:text-[#70B44A] ${location.pathname === '/all-tutors' ? `text-[#70B44A]` : ''}`}>Tutors</a></li>
+          <li><a href="/all-posts" className={`hover:text-[#70B44A] ${location.pathname === '/all-posts' ? `text-[#70B44A]` : ''}`}>Tuitions</a></li>
+          <li><a href="/service" className={`hover:text-[#70B44A] ${location.pathname === '/service' ? `text-[#70B44A]` : ''}`}>Services</a></li>
 
           {user && !isProfile ? (
             <li>
@@ -89,7 +91,7 @@ const Navbar = () => {
                     className="w-8 h-8 rounded-full object-cover border-2 border-[#70B44A]"
                   />
                 ) : (
-                  <FaUserCircle className="text-2xl text-[#70B44A]" />
+                  <FaUserCircle className="w-8 h-8 rounded-full object-cover text-[#70B44A]" />
                 )}
               </a>
             </li>

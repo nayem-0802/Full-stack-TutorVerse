@@ -401,10 +401,10 @@ const AllPostsPage = () => {
                         </h3>
                       </div>
                       <div className="text-sm text-gray-600 space-y-1">
-                        <p><span className="font-medium">Group:</span> {post.group || 'Not specified'}</p>
-                        <p><span className="font-medium">Salary:</span> ৳{post.salary}</p>
-                        <p><span className="font-medium">Subject:</span> {post.subject}</p>
-                        <p><span className="font-medium">Location:</span> {post.location}</p>
+                        <p><span className="font-medium">Group: </span> {post.group || 'Not specified'}</p>
+                        <p><span className="font-medium">Salary: </span> ৳{post.salary}</p>
+                        <p><span className="font-medium">Subject: </span> {post.subject}</p>
+                        <p><span className="font-medium">Location: </span> {post.location}</p>
                       </div>
                     </div>
 

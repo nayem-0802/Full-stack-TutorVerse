@@ -10,8 +10,8 @@ const ApplyModal = ({ post, isOpen, onClose, onSubmit }) => {
 
   // Handle click outside modal
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+    const handleClickOutside = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
         onClose();
       }
     };
