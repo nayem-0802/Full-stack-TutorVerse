@@ -12,7 +12,7 @@ const AllPostsPage = () => {
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [filterClass, setFilterClass] = useState('');
-  const [filterSubject, setFilterSubject] = useState('');
+  const [availability, setAvailability] = useState('');
   const [filterLocation, setFilterLocation] = useState('');
   const [filterGender, setFilterGender] = useState('');
 
@@ -124,8 +124,12 @@ const AllPostsPage = () => {
     }
 
     // Subject filter
-    if (filterSubject) {
-      filtered = filtered.filter(post => post.subject === filterSubject);
+    if (availability === 'available') {
+      filtered = filtered.filter(post => !appliedPosts.has(post.id) && !post.is_booked);
+    }else if(availability === 'applied'){
+      filtered = filtered.filter(post => appliedPosts.has(post.id));
+    }else if(availability === 'booked'){
+      filtered = filtered.filter(post => !post.is_booked);
     }
 
     // Location filter
@@ -141,7 +145,7 @@ const AllPostsPage = () => {
     }
 
     setFilteredPosts(filtered);
-  }, [posts, searchTerm, filterClass, filterSubject, filterLocation, filterGender]);
+  }, [posts, searchTerm, filterClass, availability, filterLocation, filterGender, appliedPosts]);
 
   const handleApplyClick = (post) => {
     if (!user) {
@@ -276,51 +280,14 @@ const AllPostsPage = () => {
               {/* Subject Filter */}
               <div>
                 <select
-                  value={filterSubject}
-                  onChange={(e) => setFilterSubject(e.target.value)}
+                  value={availability}
+                  onChange={(e) => setAvailability(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#70B44A]"
                 >
-                  <option value="">Search by subjects</option>
-                  <option value="All-Subject">All-Subject</option>
-                  <option value="All-Arts">All Arts</option>
-                  <option value="All-Commerce">All Commerce</option>
-                  <option value="All-Science">All Science</option>
-                  <option value="English,Math,Science">English,Math,Science</option>
-                  <option value="Physics">Physics</option>
-                  <option value="Chemistry">Chemistry</option>
-                  <option value="Biology">Biology</option>
-                  <option value="Mathematics">Mathematics</option>
-                  <option value="ICT">ICT</option>
-                  <option value="Statistics">Statistics</option>
-                  <option value="Accounting">Accounting</option>
-                  <option value="Finance">Finance</option>
-                  <option value="Management">Management</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="Business Studies">Business Studies</option>
-                  <option value="Economics">Economics</option>
-                  <option value="History">History</option>
-                  <option value="Geography">Geography</option>
-                  <option value="Political Science">Political Science</option>
-                  <option value="Philosophy">Philosophy</option>
-                  <option value="Sociology">Sociology</option>
-                  <option value="Psychology">Psychology</option>
-                  <option value="English">English</option>
-                  <option value="Bangla">Bangla</option>
-                  <option value="Islamic Studies">Islamic Studies</option>
-                  <option value="Quran Majeed & Tajweed">Quran Majeed & Tajweed</option>
-                  <option value="Hadith">Hadith</option>
-                  <option value="Fiqh">Fiqh </option>
-                  <option value="Aqaid">Aqaid </option>
-                  <option value="Arabic">Arabic</option>
-                  <option value="Tafsir">Tafsir</option>
-                  <option value="Islamic History">Islamic History</option>
-                  <option value="Balagah">Balagah </option>
-                  <option value="Mantik">Mantik </option>
-                  <option value="Sarf">Sarf </option>
-                  <option value="Nahw">Nahw (Arabic Grammar)</option>
-                  <option value="Tasauf">Tasauf </option>
-                  <option value="Mantiq & Falsafa">Mantiq & Falsafa </option>
-                  <option value="Ilmul Kalam">Ilmul Kalam </option>
+                  <option value="">All</option>
+                  <option value="available">Avaiable</option>
+                  <option value="applied">Applied</option>
+                  <option value="booked">Booked</option>
                 </select>
               </div>
 
@@ -361,7 +328,7 @@ const AllPostsPage = () => {
                 onClick={() => {
                   setSearchTerm('');
                   setFilterClass('');
-                  setFilterSubject('');
+                  setAvailability('');
                   setFilterLocation('');
                   setFilterGender('');
                 }}
